@@ -570,9 +570,10 @@
 #u21_text {
   border-width:0px;
   position:absolute;
-  left:2px;
-  top:18px;
-  width:276px;
+  left:0px;
+  top:0px;
+  width:0px;
+  visibility:hidden;
   word-wrap:break-word;
 }
 #u22_img {
@@ -595,9 +596,10 @@
 #u22_text {
   border-width:0px;
   position:absolute;
-  left:2px;
-  top:18px;
-  width:276px;
+  left:0px;
+  top:0px;
+  width:0px;
+  visibility:hidden;
   word-wrap:break-word;
 }
 #u23_div {
@@ -637,15 +639,15 @@
   left:0px;
   top:0px;
   width:24px;
-  height:29px;
+  height:30px;
 }
 #u24 {
   border-width:0px;
   position:absolute;
   left:357px;
-  top:384px;
+  top:433px;
   width:24px;
-  height:29px;
+  height:30px;
 }
 #u24_text {
   border-width:0px;
@@ -659,18 +661,18 @@
 #u25_img {
   border-width:0px;
   position:absolute;
-  left:0px;
-  top:0px;
-  width:24px;
-  height:30px;
+  left:-2px;
+  top:-2px;
+  width:74px;
+  height:9px;
 }
 #u25 {
   border-width:0px;
   position:absolute;
-  left:357px;
-  top:433px;
-  width:24px;
-  height:30px;
+  left:386px;
+  top:327px;
+  width:69px;
+  height:4px;
 }
 #u25_text {
   border-width:0px;
@@ -681,23 +683,47 @@
   visibility:hidden;
   word-wrap:break-word;
 }
-#u26_img {
-  border-width:0px;
-  position:absolute;
-  left:-2px;
-  top:-2px;
-  width:74px;
-  height:9px;
-}
 #u26 {
   border-width:0px;
   position:absolute;
-  left:386px;
-  top:327px;
-  width:69px;
-  height:4px;
+  left:391px;
+  top:381px;
+  width:226px;
+  height:38px;
 }
-#u26_text {
+#u26_input {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:226px;
+  height:38px;
+  font-family:'Arial Normal', 'Arial';
+  font-weight:400;
+  font-style:normal;
+  font-size:13px;
+  text-decoration:none;
+  color:#000000;
+  text-align:left;
+  border-color:transparent;
+  outline-style:none;
+}
+#u27_img {
+  border-width:0px;
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:24px;
+  height:29px;
+}
+#u27 {
+  border-width:0px;
+  position:absolute;
+  left:357px;
+  top:385px;
+  width:24px;
+  height:29px;
+}
+#u27_text {
   border-width:0px;
   position:absolute;
   left:0px;
@@ -705,4 +731,28 @@
   width:0px;
   visibility:hidden;
   word-wrap:break-word;
+}
+#u28 {
+  border-width:0px;
+  position:absolute;
+  left:391px;
+  top:429px;
+  width:226px;
+  height:38px;
+}
+#u28_input {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:226px;
+  height:38px;
+  font-family:'Arial Normal', 'Arial';
+  font-weight:400;
+  font-style:normal;
+  font-size:13px;
+  text-decoration:none;
+  color:#000000;
+  text-align:left;
+  border-color:transparent;
+  outline-style:none;
 }
