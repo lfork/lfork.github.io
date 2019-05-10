@@ -1,25 +1,14 @@
-# HBase考试复习
+# HBase入门
 
-## HBase大数据存取复习概要
+## 内容概述
 
-考试题型及分值
-
-1. 单选题（每小题1.5分，10个小题，共15分）
-2. 判断题（每小题1.5分，10个空，共15分，正确的打√，错误的打×）
-3. 程序填空题(每空1.5分，10个空，共15分)
-4. 分析简答题（3个小题，每个小题10分，共30分）
-5. 综合题（25分）
-
-复习概要
-
-1. 重点复习授课PPT
-2. 关于NoSql的知识（概念、定义、数据库代表、特性，与关系型数据库对比，优劣势等）
-3. CAP理论、HBase安装步骤（分布式伪分布式等）、主要配置文件及其主要核心参数、Web访问及注意事项
-4. HBase数据库框架原理图，包含组件及其内容和作用等（zookeeper、hmaster、regionserver、region、Storefile、hfile等），特点特性与其他关系型数据库对比（特别是主流的MySQL、Oracle等）
-5. HBase主要进程及其作用、数据类型等
-6. HBase的shell指令操作及其含义（表空间、表、列组、列等增删改查）
-7. 行键设计原则、特性及案例分析
-8. 关系表转Hbase数据库表，Hbase的API接口编程（主要的接口类及其作用，主要的操作方法增删改查等的核心执行代码）
+1. 关于NoSql的知识（概念、定义、数据库代表、特性，与关系型数据库对比，优劣势等）
+2. CAP理论、HBase安装步骤（分布式伪分布式等）、主要配置文件及其主要核心参数、Web访问及注意事项
+3. HBase数据库框架原理图，包含组件及其内容和作用等（zookeeper、hmaster、regionserver、region、Storefile、hfile等），特点特性与其他关系型数据库对比（特别是主流的MySQL、Oracle等）
+4. HBase主要进程及其作用、数据类型等
+5. HBase的shell指令操作及其含义（表空间、表、列组、列等增删改查）
+6. 行键设计原则、特性及案例分析
+7. 关系表转Hbase数据库表，Hbase的API接口编程（主要的接口类及其作用，主要的操作方法增删改查等的核心执行代码）
 
 ## 1 NoSQL和HBase概述
 
@@ -219,11 +208,12 @@ Linux安装环境的选择：最好不要用WSL
 
 ### 3.2 HBase的各个组件
 
-四大组件
+四大组件(进程)
 
 ------
 
-+ Zookeeper
++ Zookeeper [相关进程: HQuroumPeer]
+  
   是一个高性能、集中化、分布式应用程序**协调服务**,为HBase提供了分布式的同步和组服务。
 
   通过选举,保证任何时候,集群中只有一个master,Master与RegionServers 启动时会向ZooKeeper注册
@@ -236,13 +226,15 @@ Linux安装环境的选择：最好不要用WSL
   
   默认情况下,HBase 管理ZooKeeper 实例,比如,启动或者停止ZooKeeper
 
-+ HMaster
++ HMaster [相关进程: HMaster]
+  
   管理运行在不同服务器上的RegionServer
 
-+ HReginServer
++ HReginServer [相关进程: HReginServer]
+  
   存储和管理HBase的实际数据。①维护region，处理对这些region的IO请求。②负责切分过大的region
 
-+ Client
++ Client [相关进程: Client进程]
 
   包含访问HBase的接口,并维护cache来加快对HBase的访问,比如region的位置信息
 
@@ -294,21 +286,13 @@ HRegionServer
 
   HBase还会维护单元格的版本数量(以时间戳来标识)
 
-### 3.4 相关的进程
-
-HMaster
-
-HRegionServer
-
-HQuorumPeer
-
-### 3.5 Shell命令
+### 3.4 Shell命令
 
 namespace、scan、get、put、delete
 
-### 3.6 行键设计
+### 3.5 行键设计
 
-### 3.7 相关案例分析
+### 3.6 相关案例分析
 
 用户关注
 
@@ -327,70 +311,73 @@ namespace、scan、get、put、delete
 Configuration conf = HBaseConfiguration.create();
 ```
 
-### 4.2 表上的操作 ，HBaseAdmin
+### 4.2 “DDL操作”
 
-+ 关系：org.apache.hadoop.hbase.client.HBaseAdmin
+------
+
+4.2.1 API基本介绍
+
++ HBaseAdmin
+
+  关系：org.apache.hadoop.hbase.client.HBaseAdmin
   
   现有Admin替换
 
   作用：提供了一个接口来管理HBase 数据库的表信息。
   它提供的方法包括：创建表，删除表，列出表项，使表有效或无效，以及添加或删除表列族成员等
 
-+ 初始化HBaseAdmin
++ HTable
+
++ HTableDescriptor
   
-    ```java
-    //申明HBaseAdmin,conf是用的上面的 HBaseConfiguration
++ HColumnDescriptor
+
+------
+4.2.2 代码操作
+
+初始化HBaseAdmin
+  
+```java
+//申明HBaseAdmin,conf是用的上面的 HBaseConfiguration
+HBaseAdmin hAdmin = new HBaseAdmin(conf);
+```
+
+添加表
+
+修改表：表名。
+
+修改表：修改列族。
+
+删除表：
+
+```java
+public static void deleteTable(String tableName)
+        throws Exception {
+    // 新建一个数据库管理员
     HBaseAdmin hAdmin = new HBaseAdmin(conf);
-    ```
-
-+ 添加表
-
-    ```java
-
-    //初始化配置
-
-    //初始化HAdmin
-
-    //设置namespace
-
-    //设置表名
-
-    //创建表
-    public static void addTable(String tableName)
-            throws Exception {
-        Configuration conf = HBaseConfiguration.create();
-
-        // 新建一个数据库管理员
-        HBaseAdmin hAdmin = new HBaseAdmin(conf);
-        if (hAdmin.tableExists(tableName)) {
-            hAdmin.disableTable(tableName);
-            hAdmin.deleteTable(tableName);
-        }
+    if (hAdmin.tableExists(tableName)) {
+        hAdmin.disableTable(tableName);
+        hAdmin.deleteTable(tableName);
     }
-    ```
+}
+```
 
-+ 修改表：表名。(列族修改用HTable)
+### 4.3 “DML操作”
 
-+ 删除表：
+------
 
-    ```java
-        public static void deleteTable(String tableName)
-                throws Exception {
-            // 新建一个数据库管理员
-            HBaseAdmin hAdmin = new HBaseAdmin(conf);
-            if (hAdmin.tableExists(tableName)) {
-                hAdmin.disableTable(tableName);
-                hAdmin.deleteTable(tableName);
-            }
-        }
-    ```
+4.3.1 API基本介绍
 
-### HTable 表，HTableDescriptor、HColumnDescriptor 列族
++ Result
 
-### Put
++ Put
 
-### Get
++ Get
 
-### Scan
++ Scan
 
-### Delete
++ Delete
+
+------
+
+4.3.2 代码操作
